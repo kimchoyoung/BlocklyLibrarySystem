@@ -68,11 +68,11 @@
 <script src="../blocks/procedures.js"></script>
 <script src="../blocks/import.js"></script>
 <script src="blocks/test_blocks.js"></script>
-
+<link rel="stylesheet" href="playground_css.css">
 <script>
 'use strict';
 var workspace = null;
-
+var libraryspace = null;
 function start() {
   setBackgroundColour();
 
@@ -125,6 +125,26 @@ function start() {
             scaleSpeed: 1.1
           }
       });
+  libraryspace = Blockly.inject('librarySpace',
+          {
+            grid:
+                    {
+                      spacing: 25,
+                      length: 3,
+                      colour: '#ccc',
+                      snap: true
+                    },
+            scrollbars: true,
+            toolbox: toolbox,
+            zoom:
+                    {
+                      wheel: true,
+                      startScale: 1.0,
+                      maxScale: 4,
+                      minScale: 0.25,
+                      scaleSpeed: 1.1
+                    }
+          });
   addToolboxButtonCallbacks();
   // Restore previously displayed text.
   if (sessionStorage) {
@@ -140,6 +160,7 @@ function start() {
     logEvents(false);
   }
   taChange();
+  tabInit();
 }
 
 function addToolboxButtonCallbacks() {
@@ -491,45 +512,67 @@ var spaghettiXml = [
   '    <next></next>',
   '  </block>'].join('\n');
 
+function tabInit(){
+  hide('library');
+  show('blockDiv');
+}
+
+function changeTab(){
+  var tab = document.getElementById('tabChanger');
+  if(tab.value == "main_tab"){
+    show('blocklyDiv');
+    hide('library');
+  }else if(tab.value == "library_tab"){
+    show('library');
+    hide('blocklyDiv');
+  }
+}
+
+function hide(tabName){
+  document.getElementById(tabName).style.display = 'none'
+}
+
+function show(tabName){
+  document.getElementById(tabName).style.display = 'block'
+}
 </script>
-
-<style>
-html, body {
-  height: 100%;
-}
-body {
-  background-color: #fff;
-  font-family: sans-serif;
-  overflow: hidden;
-}
-h1 {
-  font-weight: normal;
-  font-size: 140%;
-}
-#blocklyDiv {
-  float: right;
-  height: 95%;
-  width: 70%;
-}
-#importExport {
-  font-family: monospace;
-}
-
-.ioLabel>.blocklyFlyoutLabelText {
-  font-style: italic;
-}
-
-</style>
 </head>
 <body onload="start()">
 
-  <div id="blocklyDiv"></div>
+<h1>Blockly Playground</h1>
+<!--Workspace Tab -->
+<div id="blocklyDiv"></div>
+<!--Library Tab -->
+<div id="library">
+  <h1>Library</h1>
+  <div id="librarySpace"></div>
+  <br>
+  <p>
+    <input type="button" value="To JavaScript" onclick="toCode('JavaScript')">
+    &nbsp;
+    <input type="button" value="To Python" onclick="toCode('Python')">
+    &nbsp;
+    <input type="button" value="To PHP" onclick="toCode('PHP')">
+    &nbsp;
+    <input type="button" value="To Lua" onclick="toCode('Lua')">
+    &nbsp;
+    <input type="button" value="To Dart" onclick="toCode('Dart')">
+    <br>
+    <textarea id="importExport_" style="width: 50%; height: 50%"
+              onchange="taChange();" onkeyup="taChange()">
+    </textarea>
 
-  <h1>Blockly Playground</h1>
+  </p>
+</div>
 
   <p><a href="javascript:void(workspace.setVisible(true))">Show</a>
    - <a href="javascript:void(workspace.setVisible(false))">Hide</a></p>
-
+<div id="optionTab">
+  <select id="tabChanger" name="theme" onchange="changeTab()">
+    <option value="main_tab">Main</option>
+    <option value="library_tab">Library</option>
+  </select>
+  <br>
   <form id="options">
     <select name="dir" onchange="document.forms.options.submit()">
       <option value="ltr">LTR</option>
@@ -587,7 +630,7 @@ h1 {
     Log events: &nbsp;
     <input type="checkbox" onclick="logEvents(this.checked)" id="logCheck">
   </p>
-
+</div>
   <!-- The next three blocks of XML are sample toolboxes for testing basic
   configurations.  For more information on building toolboxes, see https://developers.google.com/blockly/guides/configure/web/toolbox -->
 

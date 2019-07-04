@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;
+}
+body {
+    background-color: #fff;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+h1 {
+    font-weight: normal;
+    font-size: 140%;
+}
+#blocklyDiv {
+    float: right;
+    height: 95%;
+    width: 70%;
+}
+#importExport {
+    font-family: monospace;
+}
+
+.ioLabel>.blocklyFlyoutLabelText {
+    font-style: italic;
+}
+#optionTab{
+    background-color: black;
+    width: 28%;
+    border-left: white
+}
+
+#importedFunctions{
+    clear: both;
+    display: none;
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: scroll
+}
+
+#librarySpace{
+    float:left;
+    height:100px;
+    width:40%
+}
