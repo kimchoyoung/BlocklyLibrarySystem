@@ -655,6 +655,8 @@ h1 {
       <script>
         let manager = new SpriteManager();
         manager.addSpriteAndSelect("aww-cat.png");
+        manager.getCurrentSprite().height = 20;
+        manager.getCurrentSprite().width = 20;
         manager.getCurrentSprite().draw();
 
         // let canvas = new Canvas("canvases", "aww-cat.png", 1, 500, 300);

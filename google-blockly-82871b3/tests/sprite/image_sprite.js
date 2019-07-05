@@ -136,7 +136,6 @@ class ImageSprite {
     this.y += y;
     console.log("a : ", this.x);
     console.log("b : ", this.y);
-
     this.update();
   }
 
@@ -255,11 +254,14 @@ class ImageSprite {
       var a = jsCode.split("\n");
       var v;
       var ret = "";
+
       for (v in a) {
+        //eval(a[v].replace("-", "this_."));
         ret += a[v].replace("-", "this.");
       }
       return ret;
     }
+    let this_ = this;
 
     code = validationCheck(code);
     console.log(code);
